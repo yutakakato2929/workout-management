@@ -41,7 +41,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'workout',
+    'users',
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'
+CORS_ALLOW_ALL_ORIGINS = True
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',#追加
@@ -80,8 +84,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'workout_management',  # MySQLで作成するデータベース名
+        'USER': 'app',  # MySQLのユーザー名
+        'PASSWORD': 'password',  # MySQLのパスワード
+        'HOST': '127.0.0.1',  # Docker Compose の場合は `db`（サービス名）
+        'PORT': '3306',  # MySQLのポート
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+        },
     }
 }
 
@@ -126,5 +137,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CORS_ALLOW_ALL_ORIGINS = True
